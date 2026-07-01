@@ -22,6 +22,8 @@
 **Your Task:** In auth/middleware.js, implement the `createSession(userId)` function. Look for TODO(human). It should create a session token and return it.
 
 **Guidance:** Consider trade-offs between storing sessions in memory (simple, lost on restart) vs a database/Redis store (persistent, scales across servers). Match whatever pattern you see elsewhere in the codebase if one exists.
+
+**Look up:** "Express session store options"
 ```
 
 ---
