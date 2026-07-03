@@ -201,3 +201,4 @@ These insights belong in the conversation, not in the codebase. Focus on insight
 
 - HTML guide template: [guide-template.html](guide-template.html)
 - Usage examples: [examples.md](examples.md)
+- Stricter self-guided mode (no answers upfront): [@solo-learning](../solo-learning/SKILL.md)
