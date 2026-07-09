@@ -15,7 +15,7 @@ Confirm the diff is non-empty before spawning anything.
 
 ### 2. Blind review round
 
-Send a single message with 2 `Agent` tool calls (subagent_type `general-purpose`, `run_in_background: false`). Each reviewer prompt contains **only the diff text** — no commit message, no issue link, no explanation of intent. Neither reviewer sees the other's output.
+Send a single message with 2 `Agent` tool calls (subagent_type `general-purpose`, `run_in_background: false`), on your platform's default/capable model tier — finding real bugs is the hard part, don't downgrade it. In Claude Code that's `model: "sonnet"`. Each reviewer prompt contains **only the diff text** — no commit message, no issue link, no explanation of intent. Neither reviewer sees the other's output.
 
 **Reviewer prompt** — include the raw diff, then this brief:
 
@@ -31,15 +31,15 @@ Merge the two reviewers' findings yourself. Two findings collapse into one candi
 
 ### 4. Skeptic verification round
 
-For each surviving candidate, send a single message with 3 `Agent` tool calls (subagent_type `general-purpose`), each given only that one finding plus the relevant diff hunk, instructed to independently try to **refute** it — argue why it's not actually a bug, a false positive, or already handled elsewhere in the diff. Tell each skeptic to default to `refuted: true` if genuinely unsure, so uncertainty doesn't accidentally save a weak finding.
+For each surviving candidate, send one `Agent` tool call (subagent_type `general-purpose`), given only that one finding plus the relevant diff hunk, instructed to try to **refute** it — argue why it's not actually a bug, a false positive, or already handled elsewhere in the diff. Tell the skeptic to default to `refuted: true` if genuinely unsure, so uncertainty doesn't accidentally save a weak finding. Refuting one already-scoped finding is a narrower, more mechanical task than the blind review round, so run it on the cheapest model tier your platform offers. In Claude Code that's `model: "haiku"`.
 
-A finding survives only if a **majority (2 of 3) do not refute it**. Track the vote count per finding — it goes in the report.
+A finding survives unless the skeptic refutes it. Track the verdict per finding — it goes in the report.
 
 ### 5. Report via lavish
 
-Build an HTML report (`.lavish/adversarial-review.html`) using the `lavish` skill's `table` and `code` playbooks — open both playbooks before writing HTML, per `lavish/SKILL.md`. One row per confirmed finding: `file:line`, one-line problem, failure scenario, skeptic vote (e.g. "2/3 disagreed"), with the relevant diff hunk rendered alongside via the code playbook. Then `npx -y lavish-axi <html-file>` to open it.
+Build an HTML report (`.lavish/adversarial-review.html`) using the `lavish` skill's `table` and `code` playbooks — open both playbooks before writing HTML, per `lavish/SKILL.md`. One row per confirmed finding: `file:line`, one-line problem, failure scenario, skeptic verdict (e.g. "not refuted"), with the relevant diff hunk rendered alongside via the code playbook. Then `npx -y lavish-axi <html-file>` to open it.
 
-Note the refuted count (e.g. "3 findings raised, 1 confirmed, 2 refuted by skeptics") so nothing is silently dropped — but keep refuted findings out of the main table, in a collapsed/secondary section if the layout supports it.
+Note the refuted count (e.g. "3 findings raised, 1 confirmed, 2 refuted by skeptic") so nothing is silently dropped — but keep refuted findings out of the main table, in a collapsed/secondary section if the layout supports it.
 
 ## Boundary
 
