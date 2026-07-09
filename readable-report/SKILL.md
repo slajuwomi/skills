@@ -31,6 +31,12 @@ report on from the conversation (the plan, analysis, or decision just made).
    per section inside `<main class="prose">`. Use `.card` divs to set apart
    key recommendations or callouts, `<table>` for structured comparisons.
    Keep prose inside the `.prose` container so line length stays readable.
+   For any code snippet, wrap it as `<pre><code class="language-xxx">...</code></pre>`
+   where `xxx` is the actual language (e.g. `language-js`, `language-python`,
+   `language-bash`, `language-json`, `language-html`) so highlight.js (already
+   wired up in the template) applies accurate syntax highlighting. Escape
+   `<`, `>`, and `&` in the snippet text. If the language is unknown, omit
+   the class and let highlight.js auto-detect.
 3. Check whether a grilling session (grill-me / grill-with-docs / grilling
    skill's one-question-at-a-time interview pattern) happened earlier in
    THIS conversation. There is no file or state to read for this — the
@@ -56,13 +62,15 @@ report on from the conversation (the plan, analysis, or decision just made).
    current working directory (mirrors the `.lavish/<name>.html` habit from
    the lavish skill), where `<slug>` is a short kebab-case name for the
    report. Use a path the user explicitly specifies instead if they give one.
-6. Tell the user the file path and that they can open it directly in a
-   browser (e.g. `open .readable-report/<slug>.html` or just double-click
-   it) — no command needs to be run, nothing needs to stay alive. If the
-   report includes the Q&A recap section, also tell them: after reviewing
-   or changing any answers in the browser, click "Copy my answers" and
-   paste the result back into the chat here so you can continue from their
-   decisions.
+6. Open the finished file in the user's default browser automatically —
+   run `open <path>` on macOS, `xdg-open <path>` on Linux, or
+   `start "" <path>` on Windows (detect the platform; on macOS this repo's
+   environment, `open` is correct). Do this without asking first; it's a
+   local, reversible action (just opens a browser tab). Then tell the user
+   the file path. If the report includes the Q&A recap section, also tell
+   them: after reviewing or changing any answers in the browser, click
+   "Copy my answers" and paste the result back into the chat here so you
+   can continue from their decisions.
 
 ## When NOT to use this skill
 
