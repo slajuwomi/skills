@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title><!-- REPORT_TITLE --></title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg: #FFFBEB;
+  --fg: #0F172A;
+  --card: #FFFFFF;
+  --accent: #D97706;
+  --accent-fg: #FFFFFF;
+  --border: #EEEDED;
+  --muted: #78716C;
+  --radius: 6px;
+  --prose-width: 70ch;
+}
+
+*{ box-sizing: border-box; }
+
+html,body{ margin:0; padding:0; }
+
+body{
+  background: var(--bg);
+  color: var(--fg);
+  font-family: "Atkinson Hyperlegible", system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+.report{
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 4rem 1.5rem 6rem;
+}
+
+.report > header{
+  margin-bottom: 3rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+h1,h2,h3,h4{
+  font-family: "Crimson Pro", Georgia, serif;
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--fg);
+  margin: 0 0 0.5rem;
+}
+
+h1{ font-size: 2.25rem; font-weight: 700; }
+h2{ font-size: 1.5rem; margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+h3{ font-size: 1.15rem; margin-top: 1.5rem; }
+
+.report .meta{
+  color: var(--muted);
+  font-size: 0.9rem;
+  margin-top: 0.25rem;
+}
+
+.prose, .prose p, .prose li{
+  max-width: var(--prose-width);
+}
+
+p{ margin: 0 0 1rem; }
+
+ul, ol{ margin: 0 0 1rem; padding-left: 1.4rem; }
+li{ margin-bottom: 0.4rem; }
+
+a{
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-color: rgba(217,119,6,0.35);
+  text-underline-offset: 2px;
+}
+a:hover{ text-decoration-color: var(--accent); }
+
+strong{ font-weight: 700; }
+
+.card{
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+}
+
+table{
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  font-size: 0.95rem;
+}
+th, td{
+  text-align: left;
+  padding: 0.6rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+}
+th{ font-weight: 700; color: var(--fg); }
+
+code{
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.9em;
+  background: #FAFAF3;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.1em 0.35em;
+}
+pre{
+  background: #FAFAF3;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem;
+  overflow-x: auto;
+}
+pre code{ background: none; border: none; padding: 0; }
+
+blockquote{
+  margin: 1.5rem 0;
+  padding-left: 1rem;
+  border-left: 3px solid var(--accent);
+  color: var(--muted);
+}
+
+hr{ border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+
+/* ---- Q&A recap section (grilling integration) ---- */
+.qa-section{ margin-top: 3rem; }
+.qa-intro{ color: var(--muted); font-size: 0.95rem; margin-bottom: 1.5rem; }
+
+.qa-question{
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1rem;
+}
+.qa-q-text{ margin: 0 0 0.85rem; font-weight: 700; }
+.qa-options{ display: flex; flex-direction: column; gap: 0.5rem; }
+.qa-option{
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  padding: 0.4rem 0.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.qa-option:hover{ background: var(--bg); }
+.qa-option input[type="radio"]{ margin: 0; accent-color: var(--accent); }
+.qa-tag{
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  border-radius: 3px;
+  padding: 0.05rem 0.35rem;
+  margin-left: 0.4rem;
+}
+.qa-custom-input{
+  font: inherit;
+  font-size: 0.95rem;
+  padding: 0.3rem 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  flex: 1;
+  min-width: 0;
+}
+.qa-custom-input:disabled{ background: var(--bg); color: var(--muted); }
+
+.qa-copy-bar{
+  position: sticky;
+  bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem 1.25rem;
+  margin-top: 1.5rem;
+  box-shadow: 0 2px 10px rgba(15,23,42,0.06);
+}
+.qa-copy-btn{
+  font: inherit;
+  font-weight: 700;
+  background: var(--accent);
+  color: var(--accent-fg);
+  border: none;
+  border-radius: 4px;
+  padding: 0.6rem 1.1rem;
+  cursor: pointer;
+}
+.qa-copy-btn:hover{ background: #B45F04; }
+.qa-copy-status{ color: var(--muted); font-size: 0.9rem; }
+.qa-output{
+  width: 100%;
+  min-height: 8rem;
+  margin-top: 0.75rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.85rem;
+  padding: 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  display: none;
+}
+.qa-output.is-visible{ display: block; }
+</style>
+</head>
+<body>
+<div class="report">
+  <header>
+    <h1><!-- REPORT_TITLE --></h1>
+    <p class="meta"><!-- REPORT_SUBTITLE_OR_DATE --></p>
+  </header>
+
+  <main class="prose">
+    <!-- REPORT_CONTENT: replace this comment with the actual report
+         sections. Use <h2> per section, <p>/<ul>/<table> for body content,
+         and <div class="card">...</div> to set apart key recommendations
+         or callouts. -->
+  </main>
+
+  <!-- QA_SECTION_START: delete this entire block (through QA_SECTION_END)
+       if no grilling/grill-me session occurred in this conversation -->
+  <section class="qa-section" id="qa-section">
+    <h2>Design Q&amp;A Recap</h2>
+    <p class="qa-intro">Below is every question asked while grilling this plan, in order. Your original answer is pre-selected. Change any answer or pick "Custom" to override, then copy your answers back into the chat.</p>
+
+    <div id="qa-questions">
+      <!-- One .qa-question block per question asked, in the order asked.
+           Duplicate the block below per question. -->
+
+      <div class="qa-question">
+        <p class="qa-q-text"><!-- QUESTION TEXT --></p>
+        <div class="qa-options" role="radiogroup" aria-label="Answer">
+          <label class="qa-option">
+            <input type="radio" name="q1" value="<!-- RECOMMENDED ANSWER -->" checked>
+            <span><!-- RECOMMENDED ANSWER --> <span class="qa-tag">recommended</span></span>
+          </label>
+          <label class="qa-option">
+            <input type="radio" name="q1" value="<!-- OTHER DISCUSSED ANSWER -->">
+            <span><!-- OTHER DISCUSSED ANSWER --></span>
+          </label>
+          <label class="qa-option qa-option-custom">
+            <input type="radio" name="q1" value="__custom__">
+            <span>Custom:</span>
+            <input type="text" class="qa-custom-input" placeholder="Type your own answer" disabled>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="qa-copy-bar">
+      <button type="button" class="qa-copy-btn" id="qa-copy-btn">Copy my answers</button>
+      <span class="qa-copy-status" id="qa-copy-status"></span>
+    </div>
+    <textarea class="qa-output" id="qa-output" readonly></textarea>
+  </section>
+  <!-- QA_SECTION_END -->
+</div>
+
+<!-- QA_SCRIPT: keep this script only if the QA_SECTION block above was kept -->
+<script>
+(function(){
+  var form = document.getElementById('qa-questions');
+  if(!form) return;
+
+  form.addEventListener('change', function(e){
+    var target = e.target;
+    if(target.type !== 'radio') return;
+    var qBlock = target.closest('.qa-question');
+    var customInput = qBlock.querySelector('.qa-custom-input');
+    var customRadio = qBlock.querySelector('input[value="__custom__"]');
+    if(!customInput || !customRadio) return;
+    var isCustom = customRadio.checked;
+    customInput.disabled = !isCustom;
+    if(isCustom) customInput.focus();
+  });
+
+  function serializeAnswers(){
+    var blocks = form.querySelectorAll('.qa-question');
+    var lines = [];
+    blocks.forEach(function(block, i){
+      var qText = block.querySelector('.qa-q-text').textContent.trim();
+      var selected = block.querySelector('input[type="radio"]:checked');
+      var answer = '';
+      if(selected){
+        if(selected.value === '__custom__'){
+          var customInput = block.querySelector('.qa-custom-input');
+          answer = (customInput && customInput.value.trim()) || '(no custom answer entered)';
+        } else {
+          answer = selected.value;
+        }
+      } else {
+        answer = '(no answer selected)';
+      }
+      lines.push('Q' + (i + 1) + ': ' + qText + '\nA: ' + answer);
+    });
+    return lines.join('\n\n');
+  }
+
+  var copyBtn = document.getElementById('qa-copy-btn');
+  var status = document.getElementById('qa-copy-status');
+  var output = document.getElementById('qa-output');
+
+  copyBtn.addEventListener('click', function(){
+    var text = serializeAnswers();
+    output.value = text;
+
+    function showSelectFallback(msg){
+      output.classList.add('is-visible');
+      output.focus();
+      output.select();
+      status.textContent = msg;
+    }
+
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(function(){
+        status.textContent = 'Copied! Paste it back into your chat with Claude.';
+      }).catch(function(){
+        showSelectFallback('Could not auto-copy - text is selected below, press Cmd/Ctrl+C.');
+      });
+    } else {
+      showSelectFallback('Clipboard API unavailable - text is selected below, press Cmd/Ctrl+C.');
+    }
+  });
+})();
+</script>
+</body>
+</html>
